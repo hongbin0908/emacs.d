@@ -167,3 +167,50 @@
 ;; coding: utf-8
 ;; no-byte-compile: t
 ;; End:
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Windows Cycling BEGIN
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun windmove-up-cycle()
+  (interactive)
+  (condition-case nil (windmove-up)
+    (error (condition-case nil (windmove-down)
+             (error (condition-case nil (windmove-right) (error (condition-case nil (windmove-left) (error (windmove-up))))))))))
+
+(defun windmove-down-cycle()
+  (interactive)
+  (condition-case nil (windmove-down)
+    (error (condition-case nil (windmove-up)
+             (error (condition-case nil (windmove-left) (error (condition-case nil (windmove-right) (error (windmove-down))))))))))
+
+(defun windmove-right-cycle()
+  (interactive)
+  (condition-case nil (windmove-right)
+    (error (condition-case nil (windmove-left)
+             (error (condition-case nil (windmove-up) (error (condition-case nil (windmove-down) (error (windmove-right))))))))))
+
+(defun windmove-left-cycle()
+  (interactive)
+  (condition-case nil (windmove-left)
+    (error (condition-case nil (windmove-right)
+             (error (condition-case nil (windmove-down) (error (condition-case nil (windmove-up) (error (windmove-left))))))))))
+
+(global-set-key (kbd "S-<up>") 'windmove-up-cycle)
+(global-set-key (kbd "S-<down>") 'windmove-down-cycle)
+(global-set-key (kbd "S-<right>") 'windmove-right-cycle)
+(global-set-key (kbd "S-<left>") 'windmove-left-cycle)
+
+(global-set-key (kbd "C-x a") 'shrink-window-horizontally)
+(global-set-key (kbd "C-x d") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-x w") 'shrink-window)
+(global-set-key (kbd "C-x s") 'enlarge-window)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Windows Cycling END
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; change command to meta, and ignore option to use weird Norwegian keyboard
+(setq mac-option-modifier 'control)
+(setq mac-command-modifier 'meta)
+(setq ns-function-modifier 'hyper)
